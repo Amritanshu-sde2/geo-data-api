@@ -114,6 +114,28 @@ Edit `src/config.js` to customize:
 - **Administrative Types**: 93 different state/province types supported
 - **WikiData Integration**: 99.8% of cities linked to Wikipedia references
 
+## Roadmap
+
+### 🚀 Phase 1: Enhanced User Experience
+
+- [ ] **Astro-powered Landing Page**: Replace current HTML with Astro for better performance and maintainability
+- [ ] **Interactive Demo Redesign**: Rebuild demo pages using Astro with improved UX and modern design
+- [ ] **Single City Endpoints**: Add option to generate individual city API endpoints for better granularity
+
+### 🔧 Phase 2: Developer Experience
+
+- [ ] **OpenAPI Specification**: Generate comprehensive OpenAPI/Swagger docs for better API discovery
+- [ ] **SDK Generation**: Create SDKs for JavaScript, Python, and PHP
+- [ ] **TypeScript Support**: Add TypeScript definitions for better developer experience
+- [ ] **CLI Tool Enhancement**: Improve command-line interface with more options and better error handling
+
+### 📊 Phase 3: Advanced Features
+
+- [ ] **GraphQL API**: Add GraphQL support alongside REST API for flexible querying
+- [ ] **Real-time Updates**: Implement webhook system for data updates and notifications
+- [ ] **Advanced Search**: Add fuzzy search, autocomplete, and advanced filtering capabilities
+- [ ] **Data Export**: Support for CSV, XML, and other data formats
+
 ## Deployment
 
 1. Run the build (see Quick start).
