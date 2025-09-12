@@ -100,6 +100,8 @@
       </div>
 
       <script>
+        const API_BASE_URL = 'https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1';
+
         let countries = [];
         let currentStates = [];
         let currentCities = [];
@@ -114,7 +116,7 @@
         // Load countries
         async function loadCountries() {
           try {
-            const response = await fetch('/api/v1/countries.json');
+            const response = await fetch(`${API_BASE_URL}/countries.json`);
             const data = await response.json();
             countries = data.data || data;
 
@@ -137,7 +139,7 @@
           try {
             const selectedCountry = countries.find(c => c.id == countryId);
             const isoCode = selectedCountry.iso2.toLowerCase();
-            const response = await fetch(`/api/v1/states/country/${isoCode}.json`);
+            const response = await fetch(`${API_BASE_URL}/states/country/${isoCode}.json`);
             const data = await response.json();
             currentStates = data.data || data;
 
@@ -161,7 +163,7 @@
           try {
             const selectedState = currentStates.find(s => s.id == stateId);
             const isoCode = selectedState.iso3166_2 ? selectedState.iso3166_2.toLowerCase().replace(/[^a-z0-9-]/g, "-") : stateId;
-            const response = await fetch(`/api/v1/cities/state/${isoCode}.json`);
+            const response = await fetch(`${API_BASE_URL}/cities/state/${isoCode}.json`);
             const data = await response.json();
             currentCities = data.data || data;
 
@@ -203,7 +205,7 @@
             <p class="mb-1"><strong>Coordinates:</strong> ${city.latitude}, ${city.longitude}</p>
           `;
 
-          apiEndpoint.textContent = `API Endpoint: /api/v1/cities/${city.id}.json`;
+          apiEndpoint.textContent = `API Endpoint: ${API_BASE_URL}/cities/${city.id}.json`;
           result.style.display = 'block';
         }
 
