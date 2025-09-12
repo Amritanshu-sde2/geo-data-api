@@ -1,6 +1,6 @@
 # Geo-Data API Static Generator
 
-[![npm version](https://badge.fury.io/js/geo-data-api.svg)](https://badge.fury.io/js/geo-data-api)
+[![npm version](https://badge.fury.io/js/geo-data-api.svg)](https://www.npmjs.com/package/geo-data-api)
 [![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/geo-data-api)](https://www.jsdelivr.com/package/npm/geo-data-api)
 
 Generate a static JSON API for geographic data including countries, states and cities that can be hosted on any CDN.
