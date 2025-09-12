@@ -4,8 +4,6 @@ Generate a static JSON API for geographic data including countries, states and c
 
 This repository transforms the upstream dataset (countries, states, cities) into a small, cacheable, CDN-ready API under `dist/api/v1/`.
 
-This project uses the latest upstream database maintained at [dr5hn/countries-states-cities-database](https://github.com/dr5hn/countries-states-cities-database).
-
 ## Quick start
 
 Prerequisites: Node.js and npm.
@@ -90,6 +88,15 @@ Edit `src/config.js` to customize:
 - Search fields included in index files
 - `CDN_BASE_URL` used by examples
 - Optional: country flag icons via [flag-icons (Lipis)](https://flagicons.lipis.dev/) (configurable in `src/config.js`)
+
+## Documentation
+
+📚 **Complete API Documentation**
+
+- **[API Documentation](docs/API_DOCUMENTATION.md)** - Comprehensive overview with examples and best practices
+- **[Quick Start Guide](docs/QUICK_START.md)** - Get up and running quickly with code examples
+- **[Endpoints Reference](docs/ENDPOINTS.md)** - Detailed reference for all available API endpoints
+- **[Data Structure Reference](docs/DATA_STRUCTURE.md)** - Complete field definitions and sample objects
 
 ## Advanced Features
 
