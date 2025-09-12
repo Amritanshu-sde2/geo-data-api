@@ -1,5 +1,5 @@
 {
-  "name": "geo-data",
+  "name": "geo-data-api",
   "version": "1.0.0",
   "description": "Generate a static JSON API for geographic data including countries, states, and cities that can be hosted on any CDN. Transform geographic datasets into a small, cacheable, CDN-ready API with search capabilities.",
   "main": "src/data-processor.js",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/asterodigital/geo-data.git"
+    "url": "https://github.com/asterodigital/geo-data-api.git"
   },
   "bugs": {
-    "url": "https://github.com/asterodigital/geo-data/issues"
+    "url": "https://github.com/asterodigital/geo-data-api/issues"
   },
-  "homepage": "https://github.com/asterodigital/geo-data#readme",
+  "homepage": "https://geo-data-api.asterodigital.com",
   "keywords": [
     "api",
     "json",

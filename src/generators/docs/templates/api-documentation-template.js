@@ -268,7 +268,7 @@ console.log(cities[57995].name, cities[18514].name);
 
 ## Support
 
-For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/asterodigital/geo-data).
+For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/asterodigital/geo-data-api).
 
 ## License
 

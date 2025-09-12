@@ -189,7 +189,7 @@ data.forEach((state) => {
 ## 🏗️ Project Structure
 
 ```text
-geo-data/
+geo-data-api/
 ├── db/                           # Source data files
 │   ├── countries.json
 │   ├── states.json
