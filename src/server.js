@@ -63,15 +63,20 @@ server.listen(port, () => {
   console.log("📖 Available URLs:");
   console.log(`   🏠 Homepage:      http://localhost:${port}`);
   console.log(`   🎮 Demo:          http://localhost:${port}/demo/demo.html`);
-  console.log(`   📡 API Base:      http://localhost:${port}/api/v1/`);
   console.log(
     `   🌍 Countries:     http://localhost:${port}/api/v1/countries.json`
   );
   console.log(
-    `   🏛️  States:        http://localhost:${port}/api/v1/states/page-1.json`
+    `   🏛️  States:        http://localhost:${port}/api/v1/states/all.json`
   );
   console.log(
-    `   🏙️  Cities:        http://localhost:${port}/api/v1/cities/page-1.json`
+    `   🏙️  Cities (US):   http://localhost:${port}/api/v1/cities/country/us.json`
+  );
+  console.log(
+    `   🏙️  Cities (CA):   http://localhost:${port}/api/v1/cities/state/us-ca.json`
+  );
+  console.log(
+    `   🔍 Search:        http://localhost:${port}/api/v1/search/countries.json`
   );
   console.log("");
   console.log("💡 Tips:");
