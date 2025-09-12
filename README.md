@@ -1,5 +1,8 @@
 # Geo-Data API Static Generator
 
+[![npm version](https://badge.fury.io/js/geo-data-api.svg)](https://badge.fury.io/js/geo-data-api)
+[![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/geo-data-api)](https://www.jsdelivr.com/package/npm/geo-data-api)
+
 Generate a static JSON API for geographic data including countries, states and cities that can be hosted on any CDN.
 
 This repository transforms the upstream dataset (countries, states, cities) into a small, cacheable, CDN-ready API under `dist/api/v1/`.
@@ -166,7 +169,9 @@ Performance tips:
 Fetch all countries:
 
 ```javascript
-const resp = await fetch("https://your-cdn.com/api/v1/countries.json");
+const resp = await fetch(
+  "https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/countries.json"
+);
 const data = await resp.json();
 console.log(data);
 ```
@@ -174,7 +179,9 @@ console.log(data);
 Get states for a country (example: Afghanistan):
 
 ```javascript
-const resp = await fetch("https://your-cdn.com/api/v1/states/country/af.json");
+const resp = await fetch(
+  "https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/states/country/af.json"
+);
 const states = await resp.json();
 ```
 
@@ -182,7 +189,7 @@ Get cities for a state (example: Badakhshan province):
 
 ```javascript
 const resp = await fetch(
-  "https://your-cdn.com/api/v1/cities/state/af-bds.json"
+  "https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/cities/state/af-bds.json"
 );
 const cities = await resp.json();
 ```
@@ -190,7 +197,9 @@ const cities = await resp.json();
 Search client-side (example):
 
 ```javascript
-const resp = await fetch("https://your-cdn.com/api/v1/search/countries.json");
+const resp = await fetch(
+  "https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/search/countries.json"
+);
 const index = await resp.json();
 const matches = index.data.filter((c) => c.name.toLowerCase().includes("ind"));
 ```
@@ -200,13 +209,16 @@ React hook example (tiny helper):
 ```javascript
 import { useState, useEffect } from "react";
 
-export function useCountriesAPI(baseURL) {
+const API_BASE_URL =
+  "https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1";
+
+export function useCountriesAPI() {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(false);
 
   async function getCountries() {
     setLoading(true);
-    const r = await fetch(`${baseURL}/countries.json`);
+    const r = await fetch(`${API_BASE_URL}/countries.json`);
     const j = await r.json();
     setCountries(j.data || []);
     setLoading(false);
@@ -214,17 +226,17 @@ export function useCountriesAPI(baseURL) {
 
   useEffect(() => {
     getCountries();
-  }, [baseURL]);
+  }, []);
 
   async function getStates(countryId) {
     // Use ISO2 code (e.g., 'af' for Afghanistan) or numeric ID
-    const r = await fetch(`${baseURL}/states/country/${countryId}.json`);
+    const r = await fetch(`${API_BASE_URL}/states/country/${countryId}.json`);
     return r.json();
   }
 
   async function getCities(stateId) {
     // Use ISO 3166-2 code (e.g., 'af-bds' for Badakhshan) or numeric ID
-    const r = await fetch(`${baseURL}/cities/state/${stateId}.json`);
+    const r = await fetch(`${API_BASE_URL}/cities/state/${stateId}.json`);
     return r.json();
   }
 

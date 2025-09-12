@@ -430,7 +430,7 @@ States are classified by administrative type:
 
 ```javascript
 // Get cities with coordinates
-const cities = await fetch('https://your-cdn.com/api/v1/search/cities.json');
+const cities = await fetch('https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/search/cities.json');
 const citiesData = await cities.json();
 
 const citiesWithCoords = citiesData.data.filter(city =>
@@ -442,12 +442,12 @@ const citiesWithCoords = citiesData.data.filter(city =>
 
 ```javascript
 // Method 1: Direct batch index lookup (recommended)
-const batchIndex = await fetch('https://your-cdn.com/api/v1/cities/batches.json');
+const batchIndex = await fetch('https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/cities/batches.json');
 const batches = await batchIndex.json();
 
 const batch = batches.data.find(b => cityId >= b.start_id && cityId <= b.end_id);
 if (batch) {
-  const response = await fetch(`https://your-cdn.com/api/v1/${batch.filename}`);
+  const response = await fetch(`https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/${batch.filename}`);
   const batchData = await response.json();
   const city = batchData.data[cityId];
 }
@@ -494,7 +494,7 @@ class CityAPI {
 }
 
 // Usage:
-const cityAPI = new CityAPI('https://your-cdn.com/api/v1');
+const cityAPI = new CityAPI('https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1');
 const bhopal = await cityAPI.getCity(57995);
 console.log(bhopal.name); // "Bhopal"
 ```

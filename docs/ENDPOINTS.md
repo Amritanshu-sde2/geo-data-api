@@ -8,7 +8,7 @@ Get list of all countries with essential information.
 
 **Response Fields**: id, name, iso2, phonecode
 
-**Example**: `https://your-cdn.com/api/v1/countries.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/countries.json`
 
 ### GET /countries/{iso2}.json
 
@@ -20,7 +20,7 @@ Get detailed information for a specific country by ISO2 code.
 
 **Response Fields**: All available fields including timezones, translations, and geographic data
 
-**Example**: `https://your-cdn.com/api/v1/countries/us.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/countries/us.json`
 
 ### GET /countries/region/{region}.json
 
@@ -30,7 +30,7 @@ Get countries by region (e.g., Asia, Europe, Africa).
 
 - `region`: Region name (lowercase, hyphenated)
 
-**Example**: `https://your-cdn.com/api/v1/countries/region/asia.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/countries/region/asia.json`
 
 **Available Regions**:
 
@@ -59,7 +59,7 @@ Get all states (full list, not paginated in this release).
 
 **Note**: States are provided as a full list (no pagination)
 
-**Example**: `https://your-cdn.com/api/v1/states/all.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/states/all.json`
 
 ### GET /states/country/{country_iso2}.json
 
@@ -75,7 +75,7 @@ Get states for a specific country with administrative details.
 - Geographic coordinates
 - ISO codes
 
-**Example**: `https://your-cdn.com/api/v1/states/country/af.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/states/country/af.json`
 
 ### GET /states/type/{type}.json
 
@@ -85,7 +85,7 @@ Get states by administrative type (province, state, region, etc.).
 
 - `type`: Administrative type (lowercase, hyphenated)
 
-**Example**: `https://your-cdn.com/api/v1/states/type/province.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/states/type/province.json`
 
 **Available Types**:
 
@@ -193,7 +193,7 @@ Get detailed information for a specific state by ISO 3166-2 code.
 
 **Response Fields**: All available fields including geographic coordinates and timezone
 
-**Example**: `https://your-cdn.com/api/v1/states/af-bds.json` (Badakhshan, Afghanistan)
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/states/af-bds.json` (Badakhshan, Afghanistan)
 
 ### GET /states/timezone/{timezone}.json
 
@@ -203,13 +203,13 @@ Get states by timezone.
 
 - `timezone`: Timezone name (URL encoded)
 
-**Example**: `https://your-cdn.com/api/v1/states/timezone/Asia-Kabul.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/states/timezone/Asia-Kabul.json`
 
 ### GET /states/timezones.json
 
 Get index of all state timezones with counts.
 
-**Example**: `https://your-cdn.com/api/v1/states/timezones.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/states/timezones.json`
 
 ---
 
@@ -223,7 +223,7 @@ Get cities for a specific country.
 
 - `country_iso2`: Country ISO2 code (2-letter uppercase)
 
-**Example**: `https://your-cdn.com/api/v1/cities/country/af.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/cities/country/af.json`
 
 ### GET /cities/state/{state_iso3166_2}.json
 
@@ -233,7 +233,7 @@ Get cities for a specific state.
 
 - `state_iso3166_2`: State ISO 3166-2 code (format: {country_iso2}-{state_code})
 
-**Example**: `https://your-cdn.com/api/v1/cities/state/af-bds.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/cities/state/af-bds.json`
 
 
 
@@ -243,7 +243,7 @@ Get batch index for efficient individual city lookups.
 
 **Note**: Contains metadata about all city batch files with start/end ID ranges. This is the recommended way to find the correct batch file for any city ID.
 
-**Example**: `https://your-cdn.com/api/v1/cities/batches.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/cities/batches.json`
 
 **Response Structure**:
 ```json
@@ -282,7 +282,7 @@ Get a batch of cities for efficient individual city access.
 
 **Note**: Cities are accessible by ID as object keys in the `data` field. Use the batch index to find the correct filename for any city ID.
 
-**Example**: `https://your-cdn.com/api/v1/cities/batch/batch-57900-58006.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/cities/batch/batch-57900-58006.json`
 
 **Response Structure**:
 ```json
@@ -317,7 +317,7 @@ Get cities by timezone.
 
 - `timezone`: Timezone name (URL encoded)
 
-**Example**: `https://your-cdn.com/api/v1/cities/timezone/Asia-Kabul.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/cities/timezone/Asia-Kabul.json`
 
 ### GET /cities/{id}.json
 
@@ -329,7 +329,7 @@ Get detailed information for a specific city.
 
 **Note**: Individual city files generated for sample cities only
 
-**Example**: `https://your-cdn.com/api/v1/cities/52.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/cities/52.json`
 
 ---
 
@@ -343,7 +343,7 @@ Searchable countries index for client-side filtering.
 
 **Usage**: Download once and filter client-side using any searchable field
 
-**Example**: `https://your-cdn.com/api/v1/search/countries.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/search/countries.json`
 
 ### GET /search/states.json
 
@@ -351,7 +351,7 @@ Searchable states index for client-side filtering.
 
 **Searchable Fields**: name, iso2, country_name, country_code, type, timezone
 
-**Example**: `https://your-cdn.com/api/v1/search/states.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/search/states.json`
 
 ### GET /search/cities.json
 
@@ -361,7 +361,7 @@ Searchable cities index for client-side filtering.
 
 **Warning**: Large file - consider client-side filtering in your application
 
-**Example**: `https://your-cdn.com/api/v1/search/cities.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/search/cities.json`
 
 ### GET /search/combined.json
 
@@ -369,7 +369,7 @@ Combined search index across all entity types (limited dataset).
 
 **Limitations**: Limited to prevent large file sizes
 
-**Example**: `https://your-cdn.com/api/v1/search/combined.json`
+**Example**: `https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1/search/combined.json`
 
 ---
 
