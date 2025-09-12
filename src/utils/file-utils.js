@@ -11,6 +11,11 @@ class FileUtils {
     const fullPath = path.join(config.OUTPUT_DIR, filePath);
     await this.ensureDir(path.dirname(fullPath));
 
+    // Delete the file if it exists to break any hard link relationships
+    if (await fs.pathExists(fullPath)) {
+      await fs.unlink(fullPath);
+    }
+
     // Determine if we should use pretty formatting
     const shouldPrettyPrint = this.shouldPrettyPrint(data, options);
 
@@ -225,9 +230,49 @@ class FileUtils {
     // Create destination directory if it doesn't exist
     await this.ensureDir(path.dirname(destPath));
 
-    // Copy the file
-    await fs.copy(sourcePath, destPath);
+    // Delete the destination file if it exists to break any hard link relationships
+    if (await fs.pathExists(destPath)) {
+      await fs.unlink(destPath);
+    }
+
+    // Copy the file using copyFile to ensure it's a proper copy, not a hard link
+    await fs.copyFile(sourcePath, destPath);
     console.log(`✓ Copied: ${path.basename(sourcePath)} -> ${destPath}`);
+  }
+
+  static async copyDir(sourceDir, destDir) {
+    // Ensure the source directory exists
+    if (!(await fs.pathExists(sourceDir))) {
+      console.warn(`⚠ Source directory not found: ${sourceDir}`);
+      return;
+    }
+
+    // Create destination directory if it doesn't exist
+    await this.ensureDir(destDir);
+
+    // Get all files and directories in source
+    const items = await fs.readdir(sourceDir);
+
+    for (const item of items) {
+      const sourcePath = path.join(sourceDir, item);
+      const destPath = path.join(destDir, item);
+
+      const stats = await fs.stat(sourcePath);
+
+      if (stats.isDirectory()) {
+        // Recursively copy directory
+        await this.copyDir(sourcePath, destPath);
+      } else {
+        // Delete the destination file if it exists to break any hard link relationships
+        if (await fs.pathExists(destPath)) {
+          await fs.unlink(destPath);
+        }
+        // Copy file using copyFile to ensure it's a proper copy, not a hard link
+        await fs.copyFile(sourcePath, destPath);
+      }
+    }
+
+    console.log(`✓ Copied directory: ${sourceDir} -> ${destDir}`);
   }
 }
 

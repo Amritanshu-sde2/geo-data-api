@@ -1,5 +1,6 @@
 const FileUtils = require("./utils/file-utils");
 const path = require("path");
+const fs = require("fs-extra");
 
 class DemoCopier {
   async copyDemoFiles() {
@@ -16,10 +17,9 @@ class DemoCopier {
     const demoSourceDir = path.join(projectRoot, "demo");
     const demoDestDir = path.join(projectRoot, "dist", "demo");
 
-    // Use fs-extra directly for directory copy to preserve folder structure
-    const fs = require("fs-extra");
+    // Use FileUtils.copyDir to ensure proper copying without hard links
     if (await fs.pathExists(demoSourceDir)) {
-      await fs.copy(demoSourceDir, demoDestDir);
+      await FileUtils.copyDir(demoSourceDir, demoDestDir);
       console.log(`✓ Copied: demo -> ${demoDestDir}`);
     } else {
       console.warn(`⚠ Source demo folder not found: ${demoSourceDir}`);
