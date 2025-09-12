@@ -1,0 +1,55 @@
+{
+  "name": "geo-data",
+  "version": "1.0.0",
+  "description": "Generate a static JSON API for geographic data including countries, states, and cities that can be hosted on any CDN. Transform geographic datasets into a small, cacheable, CDN-ready API with search capabilities.",
+  "main": "src/data-processor.js",
+  "scripts": {
+    "build": "node src/data-processor.js && npm run build:docs && npm run build:demo",
+    "build:pretty": "node src/data-processor.js --pretty",
+    "build:docs": "node src/docs-updater.js",
+    "build:demo": "node src/demo-copier.js",
+    "clean": "node -e \"require('fs').rmSync('dist/api', { recursive: true, force: true })\"",
+    "dev": "npm run clean && npm run build",
+    "dev:pretty": "npm run clean && npm run build:pretty",
+    "dev:serve": "npm run dev && npm run serve",
+    "serve": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asterodigital/geo-data.git"
+  },
+  "bugs": {
+    "url": "https://github.com/asterodigital/geo-data/issues"
+  },
+  "homepage": "https://github.com/asterodigital/geo-data#readme",
+  "keywords": [
+    "api",
+    "json",
+    "psql",
+    "state",
+    "states",
+    "cities",
+    "region",
+    "country",
+    "regions",
+    "countries",
+    "generator",
+    "hacktoberfest",
+    "world-regions",
+    "geographical-data",
+    "country-state-city",
+    "countries-states-cities"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Astero Digital",
+    "url": "https://asterodigital.com"
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}

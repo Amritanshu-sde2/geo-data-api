@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Demo - Geo-Data Interactive Demo</title>
+  <meta name="description"
+    content="Interactive demo for Geo-Data API. Select countries, states, and cities with live API responses. Test the geographic data API with real-time cascading dropdowns.">
+  <meta name="author" content="Astero Digital">
+  <meta name="robots" content="index, follow">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html,
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-wrapper {
+      flex: 1;
+    }
+
+    footer {
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">🌍 Geo-Data API</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="../">Home</a>
+          <a class="nav-link active" href="#">Demo</a>
+          <a class="nav-link" href="https://github.com/asterodigital/geo-data" target="_blank"
+            rel="noopener noreferrer">
+            🐙 GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <h1 class="display-4 display-5">🌍 Geo-Data API Interactive Demo</h1>
+        <p class="lead">Select a country, then state, then city</p>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-12 col-md-4 mb-3">
+          <label class="form-label fw-bold">1. Select Country:</label>
+          <select id="country-select" class="form-select">
+            <option>Loading...</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <label class="form-label fw-bold">2. Select State:</label>
+          <select id="state-select" class="form-select" disabled>
+            <option>Choose country first</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-4 mb-3">
+          <label class="form-label fw-bold">3. Select City:</label>
+          <select id="city-select" class="form-select" disabled>
+            <option>Choose state first</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Result Display -->
+      <div id="result" class="row mb-4" style="display: none;">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header bg-success text-white">
+              <h5 class="card-title mb-0">📍 Selected Location</h5>
+            </div>
+            <div class="card-body">
+              <div id="location-info"></div>
+              <hr>
+              <p class="mb-0"><strong id="api-endpoint"></strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        let countries = [];
+        let currentStates = [];
+        let currentCities = [];
+
+        const countrySelect = document.getElementById('country-select');
+        const stateSelect = document.getElementById('state-select');
+        const citySelect = document.getElementById('city-select');
+        const result = document.getElementById('result');
+        const locationInfo = document.getElementById('location-info');
+        const apiEndpoint = document.getElementById('api-endpoint');
+
+        // Load countries
+        async function loadCountries() {
+          try {
+            const response = await fetch('/api/v1/countries.json');
+            const data = await response.json();
+            countries = data.data || data;
+
+            countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
+            countries.forEach(country => {
+              const option = document.createElement('option');
+              option.value = country.id;
+              option.textContent = country.name;
+              option.dataset.country = JSON.stringify(country);
+              countrySelect.appendChild(option);
+            });
+          } catch (error) {
+            console.error('Error loading countries:', error);
+            countrySelect.innerHTML = '<option>Error loading countries</option>';
+          }
+        }
+
+        // Load states for selected country
+        async function loadStates(countryId) {
+          try {
+            const selectedCountry = countries.find(c => c.id == countryId);
+            const isoCode = selectedCountry.iso2.toLowerCase();
+            const response = await fetch(`/api/v1/states/country/${isoCode}.json`);
+            const data = await response.json();
+            currentStates = data.data || data;
+
+            stateSelect.innerHTML = '<option value="">-- Select State --</option>';
+            currentStates.forEach(state => {
+              const option = document.createElement('option');
+              option.value = state.id;
+              option.textContent = state.name;
+              option.dataset.state = JSON.stringify(state);
+              stateSelect.appendChild(option);
+            });
+            stateSelect.disabled = false;
+          } catch (error) {
+            console.error('Error loading states:', error);
+            stateSelect.innerHTML = '<option>Error loading states</option>';
+          }
+        }
+
+        // Load cities for selected state
+        async function loadCities(stateId) {
+          try {
+            const selectedState = currentStates.find(s => s.id == stateId);
+            const isoCode = selectedState.iso3166_2 ? selectedState.iso3166_2.toLowerCase().replace(/[^a-z0-9-]/g, "-") : stateId;
+            const response = await fetch(`/api/v1/cities/state/${isoCode}.json`);
+            const data = await response.json();
+            currentCities = data.data || data;
+
+            citySelect.innerHTML = '<option value="">-- Select City --</option>';
+            currentCities.forEach(city => {
+              const option = document.createElement('option');
+              option.value = city.id;
+              option.textContent = city.name;
+              option.dataset.city = JSON.stringify(city);
+              citySelect.appendChild(option);
+            });
+            citySelect.disabled = false;
+          } catch (error) {
+            console.error('Error loading cities:', error);
+            citySelect.innerHTML = '<option>Error loading cities</option>';
+          }
+        }
+
+        // Display selection
+        function displaySelection() {
+          const selectedCountry = countrySelect.selectedOptions[0];
+          const selectedState = stateSelect.selectedOptions[0];
+          const selectedCity = citySelect.selectedOptions[0];
+
+          if (!selectedCountry || !selectedState || !selectedCity ||
+            !selectedCountry.value || !selectedState.value || !selectedCity.value) {
+            result.style.display = 'none';
+            return;
+          }
+
+          const country = JSON.parse(selectedCountry.dataset.country);
+          const state = JSON.parse(selectedState.dataset.state);
+          const city = JSON.parse(selectedCity.dataset.city);
+
+          locationInfo.innerHTML = `
+            <h5>${city.name}</h5>
+            <p class="mb-1"><strong>State:</strong> ${state.name}</p>
+            <p class="mb-1"><strong>Country:</strong> ${country.name}</p>
+            <p class="mb-1"><strong>Coordinates:</strong> ${city.latitude}, ${city.longitude}</p>
+          `;
+
+          apiEndpoint.textContent = `API Endpoint: /api/v1/cities/${city.id}.json`;
+          result.style.display = 'block';
+        }
+
+        // Event listeners
+        countrySelect.addEventListener('change', (e) => {
+          if (e.target.value) {
+            loadStates(e.target.value);
+            stateSelect.innerHTML = '<option>Loading states...</option>';
+            citySelect.innerHTML = '<option>Choose state first</option>';
+            citySelect.disabled = true;
+            result.style.display = 'none';
+          }
+        });
+
+        stateSelect.addEventListener('change', (e) => {
+          if (e.target.value) {
+            loadCities(e.target.value);
+            citySelect.innerHTML = '<option>Loading cities...</option>';
+            result.style.display = 'none';
+          }
+        });
+
+        citySelect.addEventListener('change', displaySelection);
+
+        // Load countries on page load
+        document.addEventListener('DOMContentLoaded', loadCountries);
+      </script>
+    </div>
+  </div>
+
+  <footer class="text-center py-3 bg-light">
+    <p class="mb-2">&copy; 2025 Geo-Data API</p>
+    <p class="mb-0 small text-muted">
+      Built by <a href="https://asterodigital.com" target="_blank" rel="noopener noreferrer"
+        class="text-decoration-none">Astero Digital</a> |
+      Licensed under <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer"
+        class="text-decoration-none">MIT</a>
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
