@@ -4,19 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API Demo - Geo-Data Interactive Demo</title>
+  <title>Contact Form Demo - Geo-Data API</title>
   <meta name="description"
-    content="Interactive demo for Geo-Data API. Select countries, states, and cities with live API responses. Test the geographic data API with real-time cascading dropdowns.">
+    content="Contact form demo using Geo-Data API. Complete contact details with address fields and phone number with country code selector.">
   <meta name="author" content="Astero Digital">
   <meta name="robots" content="index, follow">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji" rel="stylesheet">
   <style>
     html,
     body {
       min-height: 100vh;
       margin: 0;
       padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Noto Color Emoji';
     }
 
     body {
@@ -30,6 +32,11 @@
 
     footer {
       margin-top: auto;
+    }
+
+    /* Ensure all select options also use the emoji font */
+    select option {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Noto Color Emoji';
     }
   </style>
 </head>
@@ -58,40 +65,98 @@
   <div class="content-wrapper">
     <div class="container py-5">
       <div class="text-center mb-5">
-        <h1 class="display-4 display-5">🌍 Geo-Data API Interactive Demo</h1>
-        <p class="lead">Select a country, then state, then city</p>
+        <h1 class="display-4 display-5">📋 Contact Form Demo</h1>
+        <p class="lead">Complete contact details with address and phone information</p>
       </div>
 
-      <div class="row mb-4">
-        <div class="col-12 col-md-4 mb-3">
-          <label class="form-label fw-bold">1. Select Country:</label>
-          <select id="country-select" class="form-select">
-            <option>Loading...</option>
-          </select>
+      <form id="contact-form" class="needs-validation" novalidate>
+        <!-- Contact Information -->
+        <div class="row mb-4">
+          <div class="col-12 col-md-6 mb-3">
+            <label for="full-name" class="form-label fw-bold">Full Name: <span class="text-danger">*</span></label>
+            <input type="text" id="full-name" class="form-control" placeholder="Enter your full name" required>
+            <div class="invalid-feedback">
+              Please provide your full name.
+            </div>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <label for="email" class="form-label fw-bold">Email Address: <span class="text-danger">*</span></label>
+            <input type="email" id="email" class="form-control" placeholder="Enter your email address" required>
+            <div class="invalid-feedback">
+              Please provide a valid email address.
+            </div>
+          </div>
         </div>
-        <div class="col-12 col-md-4 mb-3">
-          <label class="form-label fw-bold">2. Select State:</label>
-          <select id="state-select" class="form-select" disabled>
-            <option>Choose country first</option>
-          </select>
-        </div>
-        <div class="col-12 col-md-4 mb-3">
-          <label class="form-label fw-bold">3. Select City:</label>
-          <select id="city-select" class="form-select" disabled>
-            <option>Choose state first</option>
-          </select>
-        </div>
-      </div>
 
-      <!-- Result Display -->
+        <!-- Phone Number -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <label for="phone-number" class="form-label fw-bold">Phone Number:</label>
+            <div class="input-group">
+              <select id="country-code-select" class="form-select" style="flex: 0 0 auto; min-width: 140px;">
+                <option value="">Loading...</option>
+              </select>
+              <input type="tel" id="phone-number" class="form-control" placeholder="Enter phone number">
+            </div>
+            <div class="form-text">Country code and phone number are optional</div>
+          </div>
+        </div>
+
+        <!-- Address Section -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0">📍 Address Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-12">
+                <label for="street-address" class="form-label fw-bold">Street Address: <span class="text-danger">*</span></label>
+                <input type="text" id="street-address" class="form-control" placeholder="Enter street address" required>
+                <div class="invalid-feedback">
+                  Please provide your street address.
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12 col-md-4 mb-3">
+                <label for="country-select" class="form-label fw-bold">Country: <span class="text-danger">*</span></label>
+                <select id="country-select" class="form-select" required>
+                  <option value="">Loading...</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select your country.
+                </div>
+              </div>
+              <div class="col-12 col-md-4 mb-3">
+                <label for="state-select" class="form-label fw-bold">State/Province:</label>
+                <select id="state-select" class="form-select" disabled>
+                  <option value="">Choose country first</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-4 mb-3">
+                <label for="city-select" class="form-label fw-bold">City:</label>
+                <select id="city-select" class="form-select" disabled>
+                  <option value="">Choose state first</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 mb-3">
+                <label for="postal-code" class="form-label fw-bold">Postal/Zip Code:</label>
+                <input type="text" id="postal-code" class="form-control" placeholder="Enter postal code">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>      <!-- Result Display -->
       <div id="result" class="row mb-4" style="display: none;">
         <div class="col-12">
           <div class="card">
             <div class="card-header bg-success text-white">
-              <h5 class="card-title mb-0">📍 Selected Location</h5>
+              <h5 class="card-title mb-0">✅ Contact Information Summary</h5>
             </div>
             <div class="card-body">
-              <div id="location-info"></div>
+              <div id="contact-info"></div>
               <hr>
               <p class="mb-0"><strong id="api-endpoint"></strong></p>
             </div>
@@ -99,19 +164,132 @@
         </div>
       </div>
 
+      <!-- Submit Button -->
+      <div class="row">
+        <div class="col-12 text-center">
+          <button type="button" id="submit-btn" class="btn btn-primary btn-lg">
+            📋 Generate Contact Summary
+          </button>
+        </div>
+      </div>
+
       <script>
-        const API_BASE_URL = 'https://cdn.jsdelivr.net/npm/geo-data-api@latest/dist/api/v1';
+        // Form validation function
+        function validateForm() {
+          const form = document.getElementById('contact-form');
+          const isValid = form.checkValidity();
+          
+          if (!isValid) {
+            form.classList.add('was-validated');
+            // Scroll to first invalid field
+            const firstInvalid = form.querySelector(':invalid');
+            if (firstInvalid) {
+              firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              firstInvalid.focus();
+            }
+          } else {
+            form.classList.add('was-validated');
+          }
+          
+          return isValid;
+        }
+
+        const API_BASE_URL = '/api/v1';
 
         let countries = [];
         let currentStates = [];
         let currentCities = [];
 
+        // Phone country codes mapping
+        const phoneCountryCodes = {
+          'us': '+1',
+          'ca': '+1',
+          'gb': '+44',
+          'de': '+49',
+          'fr': '+33',
+          'it': '+39',
+          'es': '+34',
+          'au': '+61',
+          'jp': '+81',
+          'kr': '+82',
+          'cn': '+86',
+          'in': '+91',
+          'br': '+55',
+          'mx': '+52',
+          'ar': '+54',
+          'ru': '+7',
+          'za': '+27',
+          'eg': '+20',
+          'ng': '+234',
+          'ke': '+254',
+          'ae': '+971',
+          'sa': '+966',
+          'il': '+972',
+          'tr': '+90',
+          'nl': '+31',
+          'be': '+32',
+          'ch': '+41',
+          'at': '+43',
+          'dk': '+45',
+          'se': '+46',
+          'no': '+47',
+          'fi': '+358',
+          'pl': '+48',
+          'cz': '+420',
+          'hu': '+36',
+          'pt': '+351',
+          'gr': '+30',
+          'ro': '+40',
+          'bg': '+359',
+          'hr': '+385',
+          'si': '+386',
+          'sk': '+421',
+          'lt': '+370',
+          'lv': '+371',
+          'ee': '+372',
+          'ie': '+353',
+          'is': '+354',
+          'lu': '+352',
+          'mt': '+356',
+          'cy': '+357',
+          'th': '+66',
+          'vn': '+84',
+          'ph': '+63',
+          'my': '+60',
+          'sg': '+65',
+          'id': '+62',
+          'pk': '+92',
+          'bd': '+880',
+          'lk': '+94',
+          'np': '+977',
+          'nz': '+64'
+        };
+
+        // Helper function to convert ISO2 country code to flag emoji
+        function iso2ToFlag(iso2) {
+          if (!iso2 || iso2.length !== 2) return '🌍';
+          try {
+            // Convert ISO2 code to flag emoji
+            // Each letter is converted to its corresponding regional indicator symbol
+            const codePoints = iso2.toUpperCase().split('').map(char =>
+              0x1F1E6 + char.charCodeAt(0) - 65
+            );
+            return String.fromCodePoint(...codePoints);
+          } catch (e) {
+            console.warn('Failed to convert ISO2 to flag:', iso2, e);
+            return '🌍';
+          }
+        }
+
+        const countryCodeSelect = document.getElementById('country-code-select');
         const countrySelect = document.getElementById('country-select');
         const stateSelect = document.getElementById('state-select');
         const citySelect = document.getElementById('city-select');
         const result = document.getElementById('result');
-        const locationInfo = document.getElementById('location-info');
+        const contactInfo = document.getElementById('contact-info');
         const apiEndpoint = document.getElementById('api-endpoint');
+
+
 
         // Load countries
         async function loadCountries() {
@@ -120,17 +298,48 @@
             const data = await response.json();
             countries = data.data || data;
 
+            // Debug logging
+            console.log('First few countries:', countries.slice(0, 3));
+
+            // Populate address country dropdown
             countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
             countries.forEach(country => {
               const option = document.createElement('option');
               option.value = country.id;
-              option.textContent = country.name;
+
+              // Generate flag emoji from ISO2 code
+              const flagEmoji = iso2ToFlag(country.iso2);
+
+              console.log(`${country.name}: iso2="${country.iso2}" -> emoji="${flagEmoji}"`);
+
+              option.textContent = `${flagEmoji} ${country.name}`;
               option.dataset.country = JSON.stringify(country);
               countrySelect.appendChild(option);
             });
+
+            // Populate phone country code dropdown
+            countryCodeSelect.innerHTML = '<option value="">-- Select Country Code --</option>';
+            
+            // Create a sorted array of countries with phone codes
+            const countriesWithPhoneCodes = countries
+              .filter(country => phoneCountryCodes[country.iso2?.toLowerCase()])
+              .sort((a, b) => a.name.localeCompare(b.name));
+
+            countriesWithPhoneCodes.forEach(country => {
+              const option = document.createElement('option');
+              const phoneCode = phoneCountryCodes[country.iso2.toLowerCase()];
+              const flagEmoji = iso2ToFlag(country.iso2);
+              
+              option.value = phoneCode;
+              option.textContent = `${flagEmoji} ${phoneCode}`;
+              option.dataset.countryName = country.name;
+              countryCodeSelect.appendChild(option);
+            });
+
           } catch (error) {
             console.error('Error loading countries:', error);
             countrySelect.innerHTML = '<option>Error loading countries</option>';
+            countryCodeSelect.innerHTML = '<option>Error loading country codes</option>';
           }
         }
 
@@ -140,8 +349,29 @@
             const selectedCountry = countries.find(c => c.id == countryId);
             const isoCode = selectedCountry.iso2.toLowerCase();
             const response = await fetch(`${API_BASE_URL}/states/country/${isoCode}.json`);
+            if (response.status === 404) {
+              // No states for this country
+              currentStates = [];
+              stateSelect.innerHTML = '<option value="">No states found</option>';
+              stateSelect.disabled = true;
+              // Clear cities
+              currentCities = [];
+              citySelect.innerHTML = '<option>Choose state first</option>';
+              citySelect.disabled = true;
+              return;
+            }
+
             const data = await response.json();
-            currentStates = data.data || data;
+            currentStates = data.data || data || [];
+
+            if (!currentStates || currentStates.length === 0) {
+              stateSelect.innerHTML = '<option value="">No states found</option>';
+              stateSelect.disabled = true;
+              currentCities = [];
+              citySelect.innerHTML = '<option>Choose state first</option>';
+              citySelect.disabled = true;
+              return;
+            }
 
             stateSelect.innerHTML = '<option value="">-- Select State --</option>';
             currentStates.forEach(state => {
@@ -155,6 +385,11 @@
           } catch (error) {
             console.error('Error loading states:', error);
             stateSelect.innerHTML = '<option>Error loading states</option>';
+            stateSelect.disabled = true;
+            currentStates = [];
+            currentCities = [];
+            citySelect.innerHTML = '<option>Choose state first</option>';
+            citySelect.disabled = true;
           }
         }
 
@@ -162,10 +397,24 @@
         async function loadCities(stateId) {
           try {
             const selectedState = currentStates.find(s => s.id == stateId);
-            const isoCode = selectedState.iso3166_2 ? selectedState.iso3166_2.toLowerCase().replace(/[^a-z0-9-]/g, "-") : stateId;
+            const isoCode = selectedState && selectedState.iso3166_2 ? selectedState.iso3166_2.toLowerCase().replace(/[^a-z0-9-]/g, "-") : stateId;
             const response = await fetch(`${API_BASE_URL}/cities/state/${isoCode}.json`);
+            if (response.status === 404) {
+              // No cities for this state
+              currentCities = [];
+              citySelect.innerHTML = '<option value="">No cities found</option>';
+              citySelect.disabled = true;
+              return;
+            }
+
             const data = await response.json();
-            currentCities = data.data || data;
+            currentCities = data.data || data || [];
+
+            if (!currentCities || currentCities.length === 0) {
+              citySelect.innerHTML = '<option value="">No cities found</option>';
+              citySelect.disabled = true;
+              return;
+            }
 
             citySelect.innerHTML = '<option value="">-- Select City --</option>';
             currentCities.forEach(city => {
@@ -179,44 +428,139 @@
           } catch (error) {
             console.error('Error loading cities:', error);
             citySelect.innerHTML = '<option>Error loading cities</option>';
+            citySelect.disabled = true;
+            currentCities = [];
           }
         }
 
-        // Display selection
-        function displaySelection() {
+        // Display contact information
+        function displayContactInfo() {
+          // Validate form first
+          const form = document.querySelector('form') || document.body; // fallback if no form element
+          
+          const fullName = document.getElementById('full-name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const countryCode = countryCodeSelect.value;
+          const phoneNumber = document.getElementById('phone-number').value.trim();
+          const streetAddress = document.getElementById('street-address').value.trim();
+          const postalCode = document.getElementById('postal-code').value.trim();
+          
+          // Check if required fields are filled
+          const isValid = validateForm();
+          if (!isValid) {
+            return; // Stop execution if validation fails
+          }
+          
           const selectedCountry = countrySelect.selectedOptions[0];
           const selectedState = stateSelect.selectedOptions[0];
           const selectedCity = citySelect.selectedOptions[0];
 
-          if (!selectedCountry || !selectedState || !selectedCity ||
-            !selectedCountry.value || !selectedState.value || !selectedCity.value) {
-            result.style.display = 'none';
-            return;
+          // Build contact information display
+          let html = '';
+          
+          if (fullName) {
+            html += `<div class="row mb-2">
+              <div class="col-md-3 fw-bold">Name:</div>
+              <div class="col-md-9">${fullName}</div>
+            </div>`;
+          }
+          
+          if (email) {
+            html += `<div class="row mb-2">
+              <div class="col-md-3 fw-bold">Email:</div>
+              <div class="col-md-9"><a href="mailto:${email}">${email}</a></div>
+            </div>`;
+          }
+          
+          if (countryCode && phoneNumber) {
+            const selectedCodeOption = countryCodeSelect.selectedOptions[0];
+            const countryName = selectedCodeOption ? selectedCodeOption.dataset.countryName : '';
+            html += `<div class="row mb-2">
+              <div class="col-md-3 fw-bold">Phone:</div>
+              <div class="col-md-9">${countryCode} ${phoneNumber} ${countryName ? `(${countryName})` : ''}</div>
+            </div>`;
           }
 
-          const country = JSON.parse(selectedCountry.dataset.country);
-          const state = JSON.parse(selectedState.dataset.state);
-          const city = JSON.parse(selectedCity.dataset.city);
+          // Address information
+          if (streetAddress || (selectedCountry && selectedCountry.value) || postalCode) {
+            html += `<div class="row mb-2">
+              <div class="col-md-3 fw-bold">Address:</div>
+              <div class="col-md-9">`;
+            
+            if (streetAddress) html += `${streetAddress}<br>`;
+            
+            let addressLine = [];
+            if (selectedCity && selectedCity.value && selectedCity.dataset.city) {
+              try {
+                const city = JSON.parse(selectedCity.dataset.city);
+                addressLine.push(city.name);
+              } catch (e) {
+                console.warn('Error parsing city data:', e);
+              }
+            }
+            if (selectedState && selectedState.value && selectedState.dataset.state) {
+              try {
+                const state = JSON.parse(selectedState.dataset.state);
+                addressLine.push(state.name);
+              } catch (e) {
+                console.warn('Error parsing state data:', e);
+              }
+            }
+            if (postalCode) addressLine.push(postalCode);
+            
+            if (addressLine.length > 0) {
+              html += `${addressLine.join(', ')}<br>`;
+            }
+            
+            if (selectedCountry && selectedCountry.value && selectedCountry.dataset.country) {
+              try {
+                const country = JSON.parse(selectedCountry.dataset.country);
+                html += `${country.name}`;
+              } catch (e) {
+                console.warn('Error parsing country data:', e);
+              }
+            }
+            
+            html += `</div></div>`;
+          }
 
-          locationInfo.innerHTML = `
-            <h5>${city.name}</h5>
-            <p class="mb-1"><strong>State:</strong> ${state.name}</p>
-            <p class="mb-1"><strong>Country:</strong> ${country.name}</p>
-            <p class="mb-1"><strong>Coordinates:</strong> ${city.latitude}, ${city.longitude}</p>
-          `;
-
-          apiEndpoint.textContent = `API Endpoint: ${API_BASE_URL}/cities/${city.id}.json`;
-          result.style.display = 'block';
+          if (html) {
+            contactInfo.innerHTML = html;
+            
+            // Show API endpoint used for city data if available
+            if (selectedCity && selectedCity.value && selectedCity.dataset.city) {
+              try {
+                const city = JSON.parse(selectedCity.dataset.city);
+                apiEndpoint.textContent = `API Endpoint: ${API_BASE_URL}/cities/${city.id}.json`;
+              } catch (e) {
+                console.warn('Error parsing city data for endpoint:', e);
+                apiEndpoint.textContent = '';
+              }
+            } else {
+              apiEndpoint.textContent = '';
+            }
+            
+            result.style.display = 'block';
+            result.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            result.style.display = 'none';
+          }
         }
 
         // Event listeners
+        document.getElementById('submit-btn').addEventListener('click', displayContactInfo);
+        
         countrySelect.addEventListener('change', (e) => {
           if (e.target.value) {
             loadStates(e.target.value);
             stateSelect.innerHTML = '<option>Loading states...</option>';
             citySelect.innerHTML = '<option>Choose state first</option>';
             citySelect.disabled = true;
-            result.style.display = 'none';
+          } else {
+            stateSelect.innerHTML = '<option>Choose country first</option>';
+            stateSelect.disabled = true;
+            citySelect.innerHTML = '<option>Choose state first</option>';
+            citySelect.disabled = true;
           }
         });
 
@@ -224,14 +568,46 @@
           if (e.target.value) {
             loadCities(e.target.value);
             citySelect.innerHTML = '<option>Loading cities...</option>';
-            result.style.display = 'none';
+          } else {
+            citySelect.innerHTML = '<option>Choose state first</option>';
+            citySelect.disabled = true;
           }
         });
 
-        citySelect.addEventListener('change', displaySelection);
-
         // Load countries on page load
-        document.addEventListener('DOMContentLoaded', loadCountries);
+        document.addEventListener('DOMContentLoaded', function() {
+          loadCountries();
+          
+          // Add real-time validation feedback
+          const form = document.getElementById('contact-form');
+          const inputs = form.querySelectorAll('input[required], select[required]');
+          
+          inputs.forEach(input => {
+            input.addEventListener('input', function() {
+              if (this.checkValidity()) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+              } else {
+                this.classList.remove('is-valid');
+                if (form.classList.contains('was-validated')) {
+                  this.classList.add('is-invalid');
+                }
+              }
+            });
+            
+            input.addEventListener('change', function() {
+              if (this.checkValidity()) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+              } else {
+                this.classList.remove('is-valid');
+                if (form.classList.contains('was-validated')) {
+                  this.classList.add('is-invalid');
+                }
+              }
+            });
+          });
+        });
       </script>
     </div>
   </div>
@@ -246,7 +622,7 @@
     </p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

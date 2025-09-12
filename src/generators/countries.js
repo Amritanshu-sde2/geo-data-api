@@ -104,6 +104,7 @@ class CountriesGenerator extends BaseGenerator {
         currency_symbol: country.currency_symbol,
         subregion: country.subregion,
         emoji: country.emoji,
+        emojiU: country.emojiU,
       }));
 
       const sortedCountries = DataUtils.sortBy(regionCountries, "name");
@@ -161,6 +162,7 @@ class CountriesGenerator extends BaseGenerator {
         currency: country.currency,
         region: country.region,
         emoji: country.emoji,
+        emojiU: country.emojiU,
       }));
 
       const sortedCountries = DataUtils.sortBy(subregionCountries, "name");

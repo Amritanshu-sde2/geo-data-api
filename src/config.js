@@ -67,6 +67,7 @@ module.exports = {
       // "region",
       // "subregion",
       // "emoji",
+      // "emojiU",
       // "latitude",
       // "longitude",
     ],
